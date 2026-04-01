@@ -1,0 +1,7 @@
+{
+    "saudacoes": ["Oi", "olá", "bom dia", "boa tarde", "boa noite", "hello"],
+    "respostas_saudacoes": ["Olá! Seja bem vindo a Clinica Life. Como posso te ajudar hoje?"],
+    "suporte_keywords": ["problema", "remédio", "medicação", "ajuda", "receita", "exame", "hora", "endereço", "local", "localização", "médico"],
+    "consultas_keywords": ["remarcar", "agendar", "data", "dia", "horas", "hora", "reagendar", "cancelar"],
+    "despedidas": ["obrigado", "valeu", "obg", "vlw", "tchau", "até mais"]
+}
