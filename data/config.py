@@ -11,5 +11,6 @@ class Config:
         'suporte': 'Descreva o seu problema em poucas palavras:',
         'consultas': 'Deseja marcar consulta, ver agendamentos ou remarcar?',
         'atendente': 'Certo, estou transferindo você para um atendente humano. Em breve retomamos o contato.'
+        #Essas chaves possuem por valores sendo as respostas, sendo assim, vamos acessá-las em outra parte do código chamando apenas as keys
     }
 

@@ -11,10 +11,13 @@ class ChatBot:
         self.ultimo_fluxo = None
 
     def carregar_respostas(self):
-        path = os.path.join(os.path.dirname(__file__), '..', 'data', 'respostas.json')
-        #obtem nosso database json lendo com o comando read e com ele aberto, volta uma favariavel f de file
-        with open(path, 'r', encoding= 'utf-8') as f:
+     path = os.path.join(os.path.dirname(__file__), '..', 'data', 'respostas.json')
+     try:
+        with open(path, 'r', encoding='utf-8') as f:
             return json.load(f)
+     except FileNotFoundError:
+        print(f"Erro: Arquivo não encontrado em {path}")
+        return {}
         
     def normalizar_texto(self, texto):
         return texto.lower().strip()
@@ -29,18 +32,22 @@ class ChatBot:
         if any(consultas in msg for consultas in self.respostas['consultas_keywords']):
             return 'consultas'
         if any(despedida in msg for despedida in self.respostas['despedidas']):
-            return 'despedida'
+            return 'despedida' 
         return 'desconhecido'
     
     def responder(self, mensagem, fluxo_atual = None):
         if fluxo_atual:
-            return self.processar_fluxo(mensagem, fluxo_atual)
+            return self.processar_fluxos(mensagem, fluxo_atual)
         intencao = self.detectar_intencoes(mensagem)
-        repostas_rapidas = {
-            'saudacao': self.responder['repostas_saudacao'],
-            'despedida': "obrigado pelo contato!E stamos a disposição. Até mais",
-            'suporte': 'Entendo que precisa de suporte. Vou direcionar a uma pessoa de nossa equipe.'
+        respostas_rapidas = {
+            'saudacao': self.respostas["respostas_saudacoes"], 
+            'despedida': "Obrigado pelo contato! Estamos a disposição. Até mais",
+            'suporte': 'Entendo que precisa de suporte. Vou direcionar a uma pessoa de nossa equipe\nAguarde um momento, por favor.',
             'consultas': 'Perfeito, sua dúvida seria a agendamentos ou consultas passadas?',
-            'desonhecido'>
-        },
-
+            'desconhecido': 'Não entendi muito bem. Você pode escolher uma das opções abaixo:\n1 - Suporte\n2 - Falar com atendente\n3- Sair'  
+        }
+        #retornar quais as intenções, as quais estritamente devem esta dentro do respostas rapidas
+        return respostas_rapidas.get(intencao, "Como posso te ajudar hoje?")
+    def processar_fluxos(self, mensagem, fluxo):  
+        return f"Processando fluxo {fluxo}: {mensagem}"
+    #Após a leitura da mensagem, o nosso bot irá buscar o fluxo adequado
